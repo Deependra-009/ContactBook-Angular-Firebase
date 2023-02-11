@@ -60,7 +60,7 @@
     justify-content: space-around;
 }
 .button-field button{
-    width: 40%;
+    width: 45%;
     border-radius: 50px;
     font-weight: 550;
     border: 2px solid ;
@@ -80,4 +80,21 @@
 .heading-data{
     background-color: black;
     color: white;
+}
+.refresh{
+    width: 30%;
+    display: flex;
+    justify-content: right;
+    /* border: 1px solid black; */
+    
+}
+.refresh mat-icon{
+    font-size: 30px;
+}
+.refresh mat-icon:hover{
+    cursor: pointer;
+}
+.delete-icon{
+    color: red;
+    cursor: pointer;
 }

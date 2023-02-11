@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContactBookServicesService } from 'src/Services/contact-book-services.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,31 +12,13 @@ export class HomePageComponent implements OnInit {
 
   ContactForm!:FormGroup
 
-  constructor() { }
+  constructor(
+    private service:ContactBookServicesService
+  ) { }
 
   
 
   ContactList:any=[
-    {
-      id:1,
-      name:"Deependra",
-      number:"1234567890"
-    },
-    {
-      id:2,
-      name:"Deependra",
-      number:"1234567890"
-    },
-    {
-      id:3,
-      name:"Deependra",
-      number:"1234567890"
-    },
-    {
-      id:4,
-      name:"Deependra",
-      number:"1234567890"
-    },
   ]
 
   ngOnInit(): void {
@@ -51,14 +35,59 @@ export class HomePageComponent implements OnInit {
     this.ContactList=this.ContactList.filter(
       (data:any)=>data.id!=item.id
     )
+    this.service.saveContacts(this.ContactList).subscribe(
+      (data:any)=>{
+        console.log(data);
+        
+      },
+      (error)=>{
+        console.log(error);
+        
+      }
+    
+    );
   }
 
   addContactItem(){
+    
     this.ContactForm.controls['id'].setValue(this.ContactList.length+1);
     console.log(this.ContactForm.value);
     this.ContactList=[...this.ContactList,this.ContactForm.value]
-    
+    this.saveContact();
+   
     
   }
+
+  saveContact(){
+    this.service.saveContacts(this.ContactList).subscribe(
+      (data:any)=>{
+        console.log(data);
+        
+      },
+      (error)=>{
+        console.log(error);
+        
+      }
+    );
+  }
+
+  fetchContact(){
+    this.service.getContacts().subscribe(
+      (data:any)=>{
+        this.ContactList=data;
+        console.log(this.ContactList);
+        
+      },(error)=>{
+        console.log(error);
+        
+      }
+    )
+  }
+
+  editItem(item:any){
+
+  }
+
+
 
 }
