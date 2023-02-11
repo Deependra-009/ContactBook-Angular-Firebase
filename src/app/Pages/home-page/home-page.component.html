@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+    <span>Contact Book</span>
+</mat-toolbar>
+
+<div class="main-page">
+    <div class="sub-page">
+        <div class="add-contact-page">
+            <div class="acp-heading">
+                <h3>ADD CONTACT</h3>
+            </div>
+            <div class="acp-data">
+                <form [formGroup]="ContactForm" (ngSubmit)="addContactItem()">
+                    <div class="acp-input-field">
+                        <label>Enter Contact Name</label>
+                        <mat-form-field appearance="outline">
+                            <input formControlName="name" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="acp-input-field">
+                        <label>Enter Contact Number</label>
+                        <mat-form-field appearance="outline">
+                            <input formControlName="number" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="acp-input-field button-field">
+                        <button class="btn btn-outline-success" color="primary">ADD CONTACT</button>
+                        <button class="btn btn-outline-danger" color="accent">SAVE CONTACT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="contact-list-page">
+            <div class="clp-heading">
+                <h3>CONTACT LIST</h3>
+            </div>
+            <div class="clp-data">
+                <div class="clp-contact-data">
+                    <table class="table">
+                        <thead>
+                          <tr class="heading-data">
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Number</th>
+                            <th scope="col">Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of ContactList">
+                            <th scope="row">{{item.id}}</th>
+                            <td>{{item.name}}</td>
+                            <td>{{item.number}}</td>
+                            <td>
+                                <mat-icon (click)="deleteItem(item)" aria-hidden="false" aria-label="Example home icon" fontIcon="home">delete</mat-icon>
+                            </td>
+                          </tr>
+                          
+                          
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
