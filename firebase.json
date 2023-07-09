@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "Contact-Book-Firebase-Angular",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ContactBookServicesService } from 'src/Services/contact-book-services.service';
+import { Router } from '@angular/router';
+import { AuthServiceService } from 'src/app/Service/auth-service.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,84 +10,73 @@ import { ContactBookServicesService } from 'src/Services/contact-book-services.s
 })
 export class HomePageComponent implements OnInit {
 
-  ContactForm!:FormGroup
-
   constructor(
-    private service:ContactBookServicesService
+    private auth:AuthServiceService,
+    private route:Router
+    
   ) { }
+  login=true;
 
-  
-
-  ContactList:any=[
-  ]
+  LoginData!: FormGroup;
+  RegisterData!: FormGroup;
 
   ngOnInit(): void {
 
-    this.ContactForm=new FormGroup({
-      'id':new FormControl("",[Validators.required]),
-      'name':new FormControl("",[Validators.required]),
-      'number':new FormControl("",[Validators.required])
+    this.LoginData = new FormGroup({
+      'email': new FormControl('deeputrivedi@gmail.com', [Validators.required, Validators.email]),
+      'password': new FormControl('123456', Validators.required)
     });
 
+    this.RegisterData = new FormGroup({
+      'email': new FormControl('deeputrivedi123@gmail.com', [Validators.required, Validators.email]),
+      'password': new FormControl('123456', Validators.required),
+      'cpassword': new FormControl('123456', Validators.required)
+    });
   }
 
-  deleteItem(item:any){
-    this.ContactList=this.ContactList.filter(
-      (data:any)=>data.id!=item.id
-    )
-    this.service.saveContacts(this.ContactList).subscribe(
-      (data:any)=>{
-        console.log(data);
-        
-      },
-      (error)=>{
-        console.log(error);
-        
-      }
-    
-    );
+  changePage(){
+    this.login=!this.login;
   }
 
-  addContactItem(){
-    
-    this.ContactForm.controls['id'].setValue(this.ContactList.length+1);
-    console.log(this.ContactForm.value);
-    this.ContactList=[...this.ContactList,this.ContactForm.value]
-    this.saveContact();
+  submitLoginFunction(){
+    if(this.LoginData.valid ){
+      this.auth.signin(this.LoginData.value.email,this.LoginData.value.password).then(
+        (data:any)=>{
+          localStorage.setItem('token','true');
+          
+          console.log(data);
+          console.log(data.user._delegate.uid);
+          localStorage.setItem("uid",data.user._delegate.uid);
    
+          this.route.navigate(['dashboard'])
+        }
+      ).catch(
+        (error)=>{
+          console.log(error);
+          
+        }
+      )
+    }
     
   }
 
-  saveContact(){
-    this.service.saveContacts(this.ContactList).subscribe(
-      (data:any)=>{
-        console.log(data);
-        
-      },
-      (error)=>{
-        console.log(error);
-        
-      }
-    );
+  submitRegisterFunction(){
+
+    if(this.RegisterData.valid && this.RegisterData.value.password==this.RegisterData.value.cpassword){
+      this.auth.signUp(this.RegisterData.value.email,this.RegisterData.value.password).then(
+        (data)=>{
+          alert("registration succefully")
+          console.log(data);
+        }
+      ).catch(
+        (error)=>{
+          console.log(error);
+          
+        }
+      )
+  
+      
+    }
   }
-
-  fetchContact(){
-    this.service.getContacts().subscribe(
-      (data:any)=>{
-        this.ContactList=data;
-        console.log(this.ContactList);
-        
-      },(error)=>{
-        console.log(error);
-        
-      }
-    )
-  }
-
-  editItem(item:any){
-
-  }
-
-
 
 }

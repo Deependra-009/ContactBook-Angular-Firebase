@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fir-practise-2ebb0": {
+      "hosting": {
+        "Contact-Book-Firebase-Angular": [
+          "fir-practise-2ebb0"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fir-practise-2ebb0"
+  }
+}
