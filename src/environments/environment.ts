@@ -4,13 +4,13 @@
 
 export const environment = {
   firebase : {
-    apiKey: "AIzaSyDoQFCbZ0b3p-LDILBAIalWMm6vO2XGMro",
-    authDomain: "fir-practise-2ebb0.firebaseapp.com",
-    databaseURL: "https://fir-practise-2ebb0-default-rtdb.firebaseio.com",
-    projectId: "fir-practise-2ebb0",
-    storageBucket: "fir-practise-2ebb0.appspot.com",
-    messagingSenderId: "752425237446",
-    appId: "1:752425237446:web:221a5f36f0681be11710c7"
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
   },
   production: false
 };
